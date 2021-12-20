@@ -1,5 +1,10 @@
 module SnakePlot
 
-# Write your package code here.
+using DataFrames
+using Statistics 
+using GLMakie
 
+include("readFasta.jl")
+
+export readFasta
 end

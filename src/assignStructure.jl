@@ -22,8 +22,10 @@ function assignStructure(df, tmArr)
         end
     end
 
-    @view df[df.structMap == minimum(df.structMap), :].element .= "nterm" 
-    @view df[df.structMap == maximum(df.structMap), :].element .= "cterm" 
+    nt = @view df[df.structMap .== minimum(df.structMap), :] 
+    ct = @view df[df.structMap .== maximum(df.structMap), :] 
+    nt[:,:element] .= "nterm"
+    ct[:,:element] .= "cterm"
 
     return df
 end

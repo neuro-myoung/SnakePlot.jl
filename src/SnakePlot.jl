@@ -6,6 +6,7 @@ using GLMakie
 
 include("readFasta.jl")
 include("fasta2df.jl")
+include("assignStructure.jl")
 
-export readFasta, fasta2df
+export readFasta, fasta2df, assignStructure
 end

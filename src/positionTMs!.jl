@@ -1,4 +1,4 @@
-function positionTM!(df, side)
+function positionTMs!(df, side)
 		
     sub = filter(x -> x.element == "tm", df)
     grps = groupby(sub, :structMap)

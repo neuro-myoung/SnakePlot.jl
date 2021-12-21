@@ -1,5 +1,6 @@
-function loopLayout!(loop, nTurns, n, prevX, nxtX, prevY, side; yOffset = 0.2, expand=0)
-	rem = (n - nTurns*2) % nTurns
+function loopLayout!(loop, nTurns, n, prevX, nxtX, prevY, side; yOffset = 0.1, expand=0)
+	yOffset=0.1
+    rem = (n - nTurns*2) % nTurns
 	turnSize = div((n-rem-nTurns*2), nTurns)
     lftleg = 1:div(nTurns*2,2)
     rgtleg = (n-div(nTurns*2,2)+1):n
@@ -19,10 +20,13 @@ function loopLayout!(loop, nTurns, n, prevX, nxtX, prevY, side; yOffset = 0.2, e
 
     if nTurns < 5
         dX = (nxtX-prevX)/(nTurns-1)
+        if side == 1
+            expand = 1
+        end
     else
         dX = (nxtX-prevX)/5
     end
-    dY = 0.15
+    dY = 0.1
 
     ## position legs
 	for i in lftleg
@@ -34,23 +38,24 @@ function loopLayout!(loop, nTurns, n, prevX, nxtX, prevY, side; yOffset = 0.2, e
 
     ## check for loop expand
     if expand > 0
+        dX2 = 0.2
         for i in 0:expand
             if expand-i == expand
                 loop[collect(lftleg)[end-i], :y] = loop[collect(lftleg)[end]-(expand+1), :y] + side*dY
-                loop[collect(lftleg)[end-i], :x] -= (expand-i) * dX
+                loop[collect(lftleg)[end-i], :x] -= (expand-i) * dX2 
             else
                 loop[collect(lftleg)[end-i], :y] = loop[collect(lftleg)[end]-(expand+1), :y]
-                loop[collect(lftleg)[end-i], :x] -= (expand-(i-1)) * dX
+                loop[collect(lftleg)[end-i], :x] -= (expand-(i-1)) * dX2 
             end
             
             if i == 1
-                loop[collect(rgtleg)[i], :x] = nxtX + expand*dX
+                loop[collect(rgtleg)[i], :x] = nxtX + expand*dX2 
             end
-            loop[collect(rgtleg)[i+2], :x] = nxtX + (expand-i)*dX
+            loop[collect(rgtleg)[i+2], :x] = nxtX + (expand-i)*dX2 
         end
         
-        prevX -= expand * dX
-        nxtX += expand * dX
+        prevX -= expand * dX2 
+        nxtX += expand * dX2 
         dX = (nxtX-prevX)/(nTurns-1)
     end
 
